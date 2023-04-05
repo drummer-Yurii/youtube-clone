@@ -4,6 +4,7 @@ import NavLayout from '@/Layouts/NavLayout.vue';
 import CheckCircle from 'vue-material-design-icons/CheckCircle.vue';
 import ThumbUpOutline from 'vue-material-design-icons/ThumbUpOutline.vue';
 import ThumbDownOutline from 'vue-material-design-icons/ThumbDownOutline.vue';
+import RecommendedVideos from '@/Components/RecommendedVideos.vue';
 
 // defineProps({
 //     canLogin: Boolean,
@@ -67,6 +68,20 @@ import ThumbDownOutline from 'vue-material-design-icons/ThumbDownOutline.vue';
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+
+            <div class="w-[500px] p-3 sm:block hidden">
+                <div class="flex mb-3">
+                    <RecommendedVideos
+                        :vid="{
+                            title: 'Little dog in a jumper',
+                            video: '/videos/Seoul.mp4',
+                            thumbnail: '/videos/Thumbnails/Seoul.png',
+                            user: 'Urii Rybachok Dev',
+                            views: '12k views - 3 days ago',
+                        }"
+                    />
                 </div>
             </div>
         </div>
