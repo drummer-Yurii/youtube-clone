@@ -23,8 +23,13 @@ Route::get('/', function () {
     ]);
 })->name('home');
 Route::get('/add-video', function () { return Inertia::render('AddVideo');})->name('addVideo');
-Route::get('/delete-video', function () { return Inertia::render('DeleteVideo');})->name('deleteVideo');
+Route::get('/delete-video', function () {
+    return Inertia::render('DeleteVideo', [
+        'videos' => Video::all()
+    ]);
+})->name('deleteVideo');
 
 Route::get('/videos/{id}', [\App\Http\Controllers\VideosController::class, 'show'])->name('videos.show');
+Route::delete('/videos/{id}', [\App\Http\Controllers\VideosController::class, 'destroy'])->name('videos.destroy');
 
 require __DIR__.'/auth.php';

@@ -2,9 +2,7 @@
 import { Head, Link } from '@inertiajs/vue3';
 import NavLayout from '@/Layouts/NavLayout.vue';
 
-// defineProps({
-//     canLogin: Boolean,
-// });
+defineProps({ videos: Array });
 </script>
 
 <template>
@@ -20,14 +18,18 @@ import NavLayout from '@/Layouts/NavLayout.vue';
                     </tr>
                 </thead>
                 <tbody>
-                    <tr class="border-b flex justify-between">
-                        <td class="px-6 py-4 w-7/12 text-sm font-medium text-gray-900">
-                            <video width="320" src="/videos/Seoul.mp4" type="video/mp4" controls></video>
+                    <div v-for="video in videos" :key="video">
+                        <tr class="border-b flex justify-between">
+                            <td class="px-6 py-4 w-7/12 text-sm font-medium text-gray-900">
+                            <video width="320" :src="video.video || ''" type="video/mp4" controls></video>
                         </td>
                         <td class="px-6 py-4 w-5/12 text-sm font-medium text-gray-900 relative">
-                            <div class="text-white font-extrabold mb-4">This is a title</div>
+                            <div class="text-white font-extrabold mb-4">{{ video.title }}</div>
                             <div class="w-full">
-                                <button
+                                <Link
+                                    as="button"
+                                    method="delete"
+                                    :href="route('videos.destroy', { id: video.id })"
                                     class="
                                         text-white
                                         absolute
@@ -36,19 +38,20 @@ import NavLayout from '@/Layouts/NavLayout.vue';
                                         text-xs
                                         bg-red-600
                                         hover:bg-red-700
-                                        font-bold
-                                        py-1
-                                        px-1
-                                        float-right
-                                        rounded
-                                        cursor-pointer
-                                    "
-                                >
-                                    Delete
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
+                                            font-bold
+                                            py-1
+                                            px-1
+                                            float-right
+                                            rounded
+                                            cursor-pointer
+                                        "
+                                    >
+                                        Delete
+                                    </Link>
+                                </div>
+                            </td>
+                        </tr>
+                    </div>
                 </tbody>
             </table>
         </div>
