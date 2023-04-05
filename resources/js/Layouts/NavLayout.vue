@@ -35,7 +35,6 @@ const isNavOverlay = () => {
     if (width.value < 640) openSideNavOverlay.value = !openSideNavOverlay.value
     if (usePage().url !== '/' && width.value < 640) openSideNavOverlay.value = !openSideNavOverlay.value
     if (usePage().props.video) openSideNavOverlay.value = !openSideNavOverlay.value
-    if (usePage().url === '/videos/1') openSideNavOverlay.value = !openSideNavOverlay.value
 }
 
 </script>
@@ -48,9 +47,10 @@ const isNavOverlay = () => {
                     <MenuIcon fillColor="#FFFFFF" :size="26" />
                 </button>
                 <div class="mx-2"></div>
-                <div class="flex text-white items-center justify-center mr-10 cursor-pointer">
-                    YOUTUBE
-                </div>
+                <Link :href="route('home')" class="flex text-white items-center justify-center mr-10 cursor-pointer">
+                    <img width="32" src="/images/YT-logo.png" alt="">
+                    <img width="62" src="/images/YT-logo-text.png" alt="">
+                </Link>
             </div>
 
             <div class="w-[600px] md:block hidden">
@@ -155,9 +155,10 @@ const isNavOverlay = () => {
                     <MenuIcon fillColor="#FFFFFF" :size="26" />
                 </button>
                 <div class="mx-2"></div>
-                <div class="flex text-white items-center justify-center mr-10 cursor-pointer">
-                    YOUTUBE
-                </div>
+                <Link :href="route('home')" class="flex text-white items-center justify-center mr-10 cursor-pointer">
+                    <img width="32" src="/images/YT-logo.png" alt="">
+                    <img width="62" src="/images/YT-logo-text.png" alt="">
+                </Link>
             </div>
                 <ul class="w-full px-5 py-2 p-2 mt-2">
                     <SideNavItem :openSideNav="true" iconString="Home" />
