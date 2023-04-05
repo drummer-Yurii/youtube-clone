@@ -1,10 +1,53 @@
 <script setup>
-import { Head, Link } from '@inertiajs/vue3';
+import { ref } from 'vue';
+import { Head, router } from '@inertiajs/vue3';
 import NavLayout from '@/Layouts/NavLayout.vue';
 
-// defineProps({
-//     canLogin: Boolean,
-// });
+defineProps({ errors: Object });
+
+let title = ref('')
+let image = ref('')
+let video = ref('')
+let error = ref({
+    title: null,
+    image: null,
+    video: null,
+})
+
+const addVideo = () => {
+    let err = false
+
+    error.value.title = null
+    error.value.image = null
+    error.value.video = null
+
+    if (!title.value) {
+        error.value.title = 'Please enter a title';
+        err = true
+    }
+    if (!image.value) {
+        error.value.image = 'Please select a thumbnail';
+        err = true
+    }
+    if (!video.value) {
+        error.value.video = 'Please select a video';
+        err = true
+    }
+    if (err) {
+        return
+    }
+
+    let data = new FormData()
+
+    data.append('title', title.value)
+    data.append('image', image.value)
+    data.append('video', video.value)
+
+    router.post('/videos', data)
+}
+
+const getVideo = (e) => video.value = e.target.files[0]
+const getImage = (e) => image.value = e.target.files[0]
 </script>
 
 <template>
@@ -13,10 +56,11 @@ import NavLayout from '@/Layouts/NavLayout.vue';
     <NavLayout>
         <div class="max-w-xl mx-auto px-4">
             <div class="text-white font-extrabold text-3xl py-10">Add Video</div>
-            <form>
+            <form @submit.prevent="addVideo">
                 <div>
                     <div class="text-gray-200">Title</div>
                     <input
+                        v-model="title"
                         type="text"
                         class="
                         form-control
@@ -42,7 +86,7 @@ import NavLayout from '@/Layouts/NavLayout.vue';
                         "
                         placeholder="My cool video"
                     />
-                    <span class="text-red-500">This is an error</span>
+                    <span v-if="error.title" class="text-red-500">{{ error.title }}</span>
                 </div>
 
                 <div class="my-5"></div>
@@ -50,6 +94,7 @@ import NavLayout from '@/Layouts/NavLayout.vue';
                 <div>
                     <div class="text-gray-200">Thumbnail</div>
                     <input
+                        @change="getImage"
                         type="file"
                         class="
                             form-control
@@ -70,7 +115,8 @@ import NavLayout from '@/Layouts/NavLayout.vue';
                             focus:outline-none
                         "
                     >
-                    <span class="text-red-500">This is an error</span>
+                    <span v-if="error.image" class="text-red-500">{{ error.image }}</span>
+                    <span v-if="errors && errors.image" class="text-red-500">{{ errors.image }}</span>
                 </div>
 
                 <div class="my-5"></div>
@@ -78,6 +124,7 @@ import NavLayout from '@/Layouts/NavLayout.vue';
                 <div>
                     <div class="text-gray-200">Video/MP4</div>
                     <input
+                        @change="getVideo"
                         type="file"
                         class="
                             form-control
@@ -98,7 +145,8 @@ import NavLayout from '@/Layouts/NavLayout.vue';
                             focus:outline-none
                         "
                     >
-                    <span class="text-red-500">This is an error</span>
+                    <span v-if="error.video" class="text-red-500">{{ error.video }}</span>
+                    <span v-if="errors && errors.video" class="text-red-500">{{ errors.video }}</span>
                 </div>
 
                 <div class="my-5"></div>
